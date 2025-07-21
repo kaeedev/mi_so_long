@@ -4,67 +4,83 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = so_long
+NAME	:= so_long
+CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 
+# --- Rutas de Librerías ---
+# Asegúrate de que estas rutas coincidan con la estructura de tu proyecto
+LIBFT_DIR	:= ./includes/libft
+LIBFT_LIB	:= $(LIBFT_DIR)/libft.a
 
-MLX_DIR = ./minilibx
-MLX_LIB = $(MLX_DIR)/libmlx.a
+PRINTF_DIR	:= ./includes/ft_printf
+PRINTF_LIB	:= $(PRINTF_DIR)/ft_printf.a
 
+GNL_DIR		:= ./includes/get_next_line
+GNL_LIB		:= $(GNL_DIR)/get_next_line.a
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
-INCLUDES = -I. -I$(MLX_DIR)
-LDFLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
+LIBMLX_DIR	:= ./includes/MLX42
+LIBMLX_BUILD	:= $(LIBMLX_DIR)/build
+LIBMLX_LIB	:= $(LIBMLX_BUILD)/libmlx42.a
 
-SRCDIR = .
-OBJDIR = obj
+# --- Archivos del Proyecto ---
+SRCS	:= $(shell find ./srcs -iname "*.c")
+OBJS	:= ${SRCS:.c=.o}
 
+# --- Includes y Enlazado de Librerías ---
+HEADERS	:= -I ./includes -I $(LIBFT_DIR) -I $(PRINTF_DIR) -I $(GNL_DIR) -I $(LIBMLX_DIR)/include
+LIBS	:= $(LIBFT_LIB) $(PRINTF_LIB) $(GNL_LIB) $(LIBMLX_LIB) -ldl -lglfw -pthread -lm
 
-SOURCES = 
-
-OBJECTS = $(SOURCES:%.c=$(OBJDIR)/%.o)
-
+# --- Colores para la Salida ---
 GREEN = \033[0;32m
-RED = \033[0;31m
 BLUE = \033[0;34m
 NC = \033[0m
 
+# --- Reglas Principales ---
 all: $(NAME)
 
-$(OBJDIR):
-	@mkdir -p $(OBJDIR)
+# El ejecutable depende de los objetos de so_long y de TODAS las librerías
+$(NAME): $(OBJS) $(LIBFT_LIB) $(PRINTF_LIB) $(GNL_LIB) $(LIBMLX_LIB)
+	@echo "$(BLUE)Enlazando $@...$(NC)"
+	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
+	@echo "$(GREEN)✅ so_long compilado con éxito!$(NC)"
 
-$(OBJDIR)/%.o: %.c
-	@mkdir -p $(dir $@)
-	@echo "$(BLUE)Compilando $<...$(NC)"
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+# Reglas para compilar cada librería por separado
+$(LIBFT_LIB):
+	@echo "$(BLUE)Compilando Libft...$(NC)"
+	@$(MAKE) -sC $(LIBFT_DIR)
 
-$(MLX_LIB):
-	@echo "$(BLUE)Compilando MiniLibX...$(NC)"
-	@$(MAKE) -sC $(MLX_DIR)
+$(PRINTF_LIB):
+	@echo "$(BLUE)Compilando ft_printf...$(NC)"
+	@$(MAKE) -sC $(PRINTF_DIR)
 
-$(NAME): $(OBJECTS) $(MLX_LIB)
-	@echo "$(BLUE)Enlazando $(NAME)...$(NC)"
-	@$(CC) $(OBJECTS) $(LDFLAGS) -o $(NAME) 
-	@echo "$(GREEN)✓ $(NAME) creado con éxito!$(NC)"
+$(GNL_LIB):
+	@echo "$(BLUE)Compilando get_next_line...$(NC)"
+	@$(MAKE) -sC $(GNL_DIR)
 
+$(LIBMLX_LIB):
+	@echo "$(BLUE)Compilando MLX42...$(NC)"
+	@cmake $(LIBMLX_DIR) -B $(LIBMLX_BUILD) && make -C $(LIBMLX_BUILD) -j4
+
+# Regla para compilar tus archivos .c a .o
+%.o: %.c
+	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS) && printf "Compilando: $(notdir $<)\r"
+
+# --- Reglas de Limpieza ---
 clean:
-	@echo "$(RED)Limpiando archivos objeto...$(NC)"
-	@rm -rf $(OBJDIR)
-	@$(MAKE) -sC $(MLX_DIR) clean
+	@rm -rf $(OBJS)
+	@rm -rf $(LIBMLX_BUILD)
+	@$(MAKE) -sC $(LIBFT_DIR) clean
+	@$(MAKE) -sC $(PRINTF_DIR) clean
+	@$(MAKE) -sC $(GNL_DIR) clean
+	@echo "Limpiando archivos objeto y builds."
 
 fclean: clean
-	@echo "$(RED)Limpiando $(NAME)...$(NC)"
-	@rm -f $(NAME)
+	@rm -rf $(NAME)
+	@$(MAKE) -sC $(LIBFT_DIR) fclean
+	@$(MAKE) -sC $(PRINTF_DIR) fclean
+	@$(MAKE) -sC $(GNL_DIR) fclean
+	@echo "Limpiando todo."
 
 re: fclean all
 
-valgrind: all
-	@echo "$(BLUE)Ejecutando valgrind...$(NC)"
-	@valgrind --leak-check=full ./$(NAME) maps/tu_mapa.ber
-
-norm:
-	@echo "$(BLUE)Comprobando norminette...$(NC)"
-	@norminette $(SOURCES) *.h
-
-.PHONY: all clean fclean re valgrind norm
+.PHONY: all clean fclean re
