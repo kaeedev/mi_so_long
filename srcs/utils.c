@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 10:05:27 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/21 17:27:42 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:02:21 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ void	ft_error(int i)
 	else if (i == 5)
 		ft_printf("Map is empty\n");
 	else if (i == 6)
-		ft_printf("Error malloc\n");
+		ft_printf("Error malloc/calloc\n");
+	else if (i == 7)
+		ft_printf("Map is not surrounded by walls\n");
+	else if (i == 8)
+		ft_printf("Invalid character in map\n");
+	else if (i == 9)
+		ft_printf("Invalid map components\n");
 	exit(1);
 }
 
