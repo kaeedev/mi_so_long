@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:43:00 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/28 11:34:44 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/07/28 13:53:10 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,6 @@ t_list	*read_lines(int fd, t_game *game);
 void	convert_list_to_array(t_list *map_list, t_game *game);
 void	read_map_file(const char *filepath, t_game *game);
 void	validate_walls(t_game *game);
+char	**copy_map(t_game *game);
+void	flood_fill(char **map_copy, int x, int y, t_game *game);
 #endif
