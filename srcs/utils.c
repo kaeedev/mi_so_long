@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 10:05:27 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/28 13:02:21 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:06:15 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ void	ft_error(int i)
 		ft_printf("Invalid character in map\n");
 	else if (i == 9)
 		ft_printf("Invalid map components\n");
+	else if (i == 10)
+		ft_printf("No valid path exists\n");
+	else if (i == 11)
+		ft_printf("Failed to initialize MLX42\n");
 	exit(1);
 }
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation_map.c                                   :+:      :+:    :+:   */
+/*   validate_walls_and_components.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 10:51:02 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/28 12:45:37 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/07/29 13:45:32 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	count_components(t_game *game, int *c, int *p, int *e)
 				*e += 1;
 			else if (game->map[j][i] == 'C')
 				*c += 1;
-			else if (game->map[j][i] != '0' || game->map[j][i] != '1')
+			else if (game->map[j][i] != '0' && game->map[j][i] != '1')
 				ft_error(8);
 			i ++;
 		}

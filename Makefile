@@ -9,26 +9,24 @@ CFLAGS	:= -Wextra -Wall -Werror -Wunreachable-code -Ofast
 
 # --- Rutas de Librerías ---
 # Asegúrate de que estas rutas coincidan con la estructura de tu proyecto
-LIBFT_DIR	:= ./includes/libft
+LIBFT_DIR	:= ./includes/mi_libft
 LIBFT_LIB	:= $(LIBFT_DIR)/libft.a
 
 PRINTF_DIR	:= ./includes/ft_printf
-PRINTF_LIB	:= $(PRINTF_DIR)/ft_printf.a
-
-GNL_DIR		:= ./includes/get_next_line
-GNL_LIB		:= $(GNL_DIR)/get_next_line.a
+PRINTF_LIB	:= $(PRINTF_DIR)/libftprintf.a
 
 LIBMLX_DIR	:= ./includes/MLX42
 LIBMLX_BUILD	:= $(LIBMLX_DIR)/build
 LIBMLX_LIB	:= $(LIBMLX_BUILD)/libmlx42.a
 
 # --- Archivos del Proyecto ---
-SRCS	:= $(shell find ./srcs -iname "*.c")
+# Busca archivos .c en TODO el proyecto (excluyendo includes)
+SRCS	:= $(shell find ./srcs ./maps ./includes/mi_libft ./includes/get_next_line -iname "*.c")
 OBJS	:= ${SRCS:.c=.o}
 
 # --- Includes y Enlazado de Librerías ---
-HEADERS	:= -I ./includes -I $(LIBFT_DIR) -I $(PRINTF_DIR) -I $(GNL_DIR) -I $(LIBMLX_DIR)/include
-LIBS	:= $(LIBFT_LIB) $(PRINTF_LIB) $(GNL_LIB) $(LIBMLX_LIB) -ldl -lglfw -pthread -lm
+HEADERS	:= -I ./includes -I $(LIBFT_DIR) -I $(PRINTF_DIR) -I ./includes/get_next_line -I $(LIBMLX_DIR)/include
+LIBS	:= $(LIBFT_LIB) $(PRINTF_LIB) $(LIBMLX_LIB) -ldl -lglfw -pthread -lm
 
 # --- Colores para la Salida ---
 GREEN = \033[0;32m
@@ -39,7 +37,7 @@ NC = \033[0m
 all: $(NAME)
 
 # El ejecutable depende de los objetos de so_long y de TODAS las librerías
-$(NAME): $(OBJS) $(LIBFT_LIB) $(PRINTF_LIB) $(GNL_LIB) $(LIBMLX_LIB)
+$(NAME): $(OBJS) $(LIBFT_LIB) $(PRINTF_LIB) $(LIBMLX_LIB)
 	@echo "$(BLUE)Enlazando $@...$(NC)"
 	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 	@echo "$(GREEN)✅ so_long compilado con éxito!$(NC)"
@@ -52,10 +50,6 @@ $(LIBFT_LIB):
 $(PRINTF_LIB):
 	@echo "$(BLUE)Compilando ft_printf...$(NC)"
 	@$(MAKE) -sC $(PRINTF_DIR)
-
-$(GNL_LIB):
-	@echo "$(BLUE)Compilando get_next_line...$(NC)"
-	@$(MAKE) -sC $(GNL_DIR)
 
 $(LIBMLX_LIB):
 	@echo "$(BLUE)Compilando MLX42...$(NC)"
@@ -71,14 +65,12 @@ clean:
 	@rm -rf $(LIBMLX_BUILD)
 	@$(MAKE) -sC $(LIBFT_DIR) clean
 	@$(MAKE) -sC $(PRINTF_DIR) clean
-	@$(MAKE) -sC $(GNL_DIR) clean
 	@echo "Limpiando archivos objeto y builds."
 
 fclean: clean
 	@rm -rf $(NAME)
 	@$(MAKE) -sC $(LIBFT_DIR) fclean
 	@$(MAKE) -sC $(PRINTF_DIR) fclean
-	@$(MAKE) -sC $(GNL_DIR) fclean
 	@echo "Limpiando todo."
 
 re: fclean all
