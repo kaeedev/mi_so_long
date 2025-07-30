@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:43:00 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/29 13:08:45 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/07/30 14:07:08 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdio.h> // Para perror, errores descriptivos
 
 // Tamaño de cada sprite en píxeles
-# define TILE_SIZE 32
+# define TILE_SIZE 70
 
 // Códigos de teclas para Linux
 #define KEY_W MLX_KEY_W
@@ -42,9 +42,18 @@ typedef struct s_game {
 	int			player_x;
 	int			player_y;
 	int			moves;
-	
-	//Punteros a las texturas
-	
+	mlx_texture_t	*tx_floor;
+    mlx_texture_t	*tx_wall_vertical;
+	mlx_texture_t	*tx_wall_horizontal;
+    mlx_texture_t	*tx_player;
+    mlx_texture_t	*tx_collectible;
+    mlx_texture_t	*tx_exit;
+    mlx_image_t		*img_floor;
+    mlx_image_t		*img_wall_vertical;
+	mlx_image_t		*img_wall_horizontal;
+    mlx_image_t		*img_player;
+    mlx_image_t		*img_collectible;
+    mlx_image_t		*img_exit;
 } t_game;
 
 void	ft_error(int i);
@@ -63,4 +72,6 @@ void	validate_path(t_game *game);
 void	close_game(void *param);
 void	handle_keypress(mlx_key_data_t keydata, void *param);
 void	init_mlx(t_game *game);
+void	draw_map_sprites(t_game *game);
+void	load_sprites(t_game *game);
 #endif

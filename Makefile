@@ -21,7 +21,7 @@ LIBMLX_LIB	:= $(LIBMLX_BUILD)/libmlx42.a
 
 # --- Archivos del Proyecto ---
 # Busca archivos .c en TODO el proyecto (excluyendo includes)
-SRCS	:= $(shell find ./srcs ./maps ./includes/mi_libft ./includes/get_next_line -iname "*.c")
+SRCS	:= $(shell find ./srcs ./maps ./textures ./includes/mi_libft ./includes/get_next_line -iname "*.c")
 OBJS	:= ${SRCS:.c=.o}
 
 # --- Includes y Enlazado de Librerías ---

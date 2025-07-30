@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 10:01:31 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/29 13:12:36 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/07/30 13:47:11 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	main(int argc, char **argv)
 	validate_contents(&game);
 	validate_path(&game);
 	init_mlx(&game);
+	load_sprites(&game);
+	draw_map_sprites(&game);
 	mlx_loop(game.mlx);
 	return (0);
 }
