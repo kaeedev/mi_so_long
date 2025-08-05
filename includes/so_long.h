@@ -6,7 +6,7 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 13:43:00 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/08/04 13:46:05 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/08/05 11:52:59 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,8 @@ void	init_mlx(t_game *game);
 void	draw_map_sprites(t_game *game);
 void	load_sprites(t_game *game);
 void	render(t_game *game, int j, int i);
+void	move_up(t_game *game);
+void	move_down(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
 #endif

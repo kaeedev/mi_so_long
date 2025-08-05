@@ -6,12 +6,13 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 11:27:19 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/30 12:16:19 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:36:11 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
+#include "MLX42/MLX42.h"
+//funcion para cerrar el juego
 void	close_game(void *param)
 {
 	t_game	*game;
@@ -35,7 +36,7 @@ void	close_game(void *param)
 		mlx_terminate(game->mlx);
 	exit(0);
 }
-
+//funcion para detectar los eventos de teclado
 void	handle_keypress(mlx_key_data_t keydata, void *param)
 {
 	t_game *game;
@@ -45,9 +46,17 @@ void	handle_keypress(mlx_key_data_t keydata, void *param)
 	{
 		if(keydata.key == MLX_KEY_ESCAPE)
 			close_game(param);
+		else if (keydata.key == MLX_KEY_W)
+			move_up(game);
+		else if (keydata.key == MLX_KEY_A)
+			move_left(game);
+		else if (keydata.key == MLX_KEY_S)
+			move_down(game);
+		else if (keydata.key == MLX_KEY_D)
+			move_right(game);
 	}
 }
-
+//funcion para controlar la ventana. Abrirla o cerrarla y que se apliquen los eventos de teclado
 void	init_mlx(t_game *game)
 {
 	int	window_width;

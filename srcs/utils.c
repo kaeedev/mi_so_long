@@ -6,12 +6,12 @@
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 10:05:27 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/07/29 13:06:15 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:37:08 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
+//funcion que maneja diferentes mensajes de errores
 void	ft_error(int i)
 {
 	if (i == 0)

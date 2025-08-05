@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_background.c                                   :+:      :+:    :+:   */
+/*   draw_renders.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luviso-p <luviso-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 11:35:19 by luviso-p          #+#    #+#             */
-/*   Updated: 2025/08/04 13:38:05 by luviso-p         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:37:46 by luviso-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
+//funcion que renderiza los sprites segun la casilla que sea
 void	render(t_game *game, int j, int i)
 {
 	mlx_image_to_window(game->mlx, game->img_floor, i * TILE_SIZE, j * TILE_SIZE);
@@ -38,7 +38,7 @@ void	render(t_game *game, int j, int i)
 			mlx_image_to_window(game->mlx, game->img_exit, i * TILE_SIZE, j * TILE_SIZE);
 	}
 }
-
+//funcion para mostrar los sprites por todo el mapa
 void	draw_map_sprites(t_game *game)
 {
 	int	i;
